@@ -7,62 +7,34 @@
 
 import UIKit
 import ARKit
-class ViewController: UIViewController, ARSCNViewDelegate {
 
-    @IBOutlet weak var sceneView: ARSCNView!
-    let config = ARImageTrackingConfiguration()
+class ViewController: UIViewController {
+    
+    let button = UIButton()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.sceneView.debugOptions = [SCNDebugOptions.showWorldOrigin, SCNDebugOptions.showFeaturePoints]
-        // Do any additional setup after loading the view.
-        self.sceneView.delegate = self
-        guard let trackedImages = ARReferenceImage.referenceImages(inGroupNamed: "Photo", bundle: Bundle.main) else {
-            print("No image available")
+        // setup button
+        view.backgroundColor = .systemPink
+        button.setTitle("AR Experiecne", for: .normal)
+        view.addSubview(button)
+        button.backgroundColor = .white
+        button.setTitleColor(.black, for: .normal)
+        button.frame = CGRect(x: 100, y: 100, width: 200, height: 50)
+        button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+    }
+    
+    
+    @objc func didTapButton() {
+//        let rootViewController = ARViewController()
+        guard let vc = storyboard?.instantiateViewController(identifier: "ar_vc") as? ARViewController else {
             return
         }
-        self.config.trackingImages = trackedImages
-        self.config.maximumNumberOfTrackedImages = 1
-        print("Found  images")
-        self.sceneView.session.run(config)
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        self.sceneView.addGestureRecognizer(tapGesture)
-    }
-    
-    @objc func handleTap(sender: UITapGestureRecognizer) {
-        print("Tapped the screen")
-        let sceneViewTappedOn = sender.view as! SCNView
-        let touchCoord = sender.location(in: sceneViewTappedOn)
-        let hittest = sceneViewTappedOn.hitTest(touchCoord)
-        if !hittest.isEmpty {
-            print("touched something")
-        } else {
-            print("didn't touch anything")
-        }
+        let navViewController = UINavigationController(rootViewController: vc)
+        navViewController.modalPresentationStyle = .fullScreen
+        present(navViewController, animated: true)
         
     }
     
-    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-        let node = SCNNode()
-        
-        if let imageAnchor = anchor as? ARImageAnchor {
-            let plane = SCNPlane(width: imageAnchor.referenceImage.physicalSize.width, height: imageAnchor.referenceImage.physicalSize.height)
-            plane.firstMaterial?.diffuse.contents = UIColor(white: 1, alpha: 0.8)
-            let planeNode = SCNNode(geometry: plane)
-            planeNode.eulerAngles.x = -.pi / 2
-            node.addChildNode(planeNode)
-            
-            let legoScene = SCNScene(named: "art.scnassets/lego.scn")!
-            let legoNode = legoScene.rootNode.childNodes.first!
-            legoNode.position = SCNVector3Zero
-            legoNode.position.z = 0.15
-            planeNode.addChildNode(legoNode)
-        }
-        
-        return node
-    }
-
-
 }
-

@@ -19,6 +19,7 @@
 		3B25C7E1266021E300BA1827 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 3B25C7E0266021E300BA1827 /* art.scnassets */; };
 		3B25C7E3266022E100BA1827 /* lego.scn in Resources */ = {isa = PBXBuildFile; fileRef = 3B25C7E2266022E100BA1827 /* lego.scn */; };
 		3B4F55D4266025A500069DA2 /* lego_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B4F55D3266025A500069DA2 /* lego_logo.png */; };
+		3B4F55D6266AD5D700069DA2 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4F55D5266AD5D700069DA2 /* ARViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		3B25C7E0266021E300BA1827 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		3B25C7E2266022E100BA1827 /* lego.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; name = lego.scn; path = art.scnassets/lego.scn; sourceTree = "<group>"; };
 		3B4F55D3266025A500069DA2 /* lego_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lego_logo.png; path = ../../../../../Downloads/lego_logo.png; sourceTree = "<group>"; };
+		3B4F55D5266AD5D700069DA2 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,10 +111,11 @@
 			children = (
 				3B4F55D3266025A500069DA2 /* lego_logo.png */,
 				3B25C7AA26601C6000BA1827 /* AppDelegate.swift */,
-				3B25C7AC26601C6000BA1827 /* SceneDelegate.swift */,
-				3B25C7B326601C6200BA1827 /* Assets.xcassets */,
 				3B25C7AE26601C6000BA1827 /* ViewController.swift */,
+				3B4F55D5266AD5D700069DA2 /* ARViewController.swift */,
+				3B25C7B326601C6200BA1827 /* Assets.xcassets */,
 				3B25C7B026601C6000BA1827 /* Main.storyboard */,
+				3B25C7AC26601C6000BA1827 /* SceneDelegate.swift */,
 				3B25C7DC266020C500BA1827 /* Lego Block.obj */,
 				3B25C7B526601C6200BA1827 /* LaunchScreen.storyboard */,
 				3B25C7E2266022E100BA1827 /* lego.scn */,
@@ -277,6 +280,7 @@
 				3B25C7AF26601C6000BA1827 /* ViewController.swift in Sources */,
 				3B25C7AB26601C6000BA1827 /* AppDelegate.swift in Sources */,
 				3B25C7AD26601C6000BA1827 /* SceneDelegate.swift in Sources */,
+				3B4F55D6266AD5D700069DA2 /* ARViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

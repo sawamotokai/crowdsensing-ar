@@ -15,27 +15,42 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lBe-P6-eh1">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                            </arscnView>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="lBe-P6-eh1" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="3IC-0p-xkR"/>
-                            <constraint firstItem="lBe-P6-eh1" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="DdL-aq-m4t"/>
-                            <constraint firstItem="lBe-P6-eh1" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="XfD-ed-feN"/>
-                            <constraint firstAttribute="bottom" secondItem="lBe-P6-eh1" secondAttribute="bottom" id="phA-Aj-YMn"/>
-                        </constraints>
                     </view>
-                    <connections>
-                        <outlet property="sceneView" destination="lBe-P6-eh1" id="9lB-Lj-hHE"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="18.840579710144929" y="88.392857142857139"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="Co0-Uc-ZAb">
+            <objects>
+                <viewController storyboardIdentifier="ar_vc" id="Tpc-DV-sNA" customClass="ARViewController" customModule="ar" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="FS5-Au-Eue">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CXm-uq-ziI">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </arscnView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="dNJ-yZ-lZM"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="CXm-uq-ziI" firstAttribute="trailing" secondItem="dNJ-yZ-lZM" secondAttribute="trailing" id="KWe-tH-afu"/>
+                            <constraint firstAttribute="bottom" secondItem="CXm-uq-ziI" secondAttribute="bottom" id="dqz-IW-Q8S"/>
+                            <constraint firstItem="CXm-uq-ziI" firstAttribute="leading" secondItem="dNJ-yZ-lZM" secondAttribute="leading" id="wSV-86-3UU"/>
+                            <constraint firstItem="CXm-uq-ziI" firstAttribute="top" secondItem="FS5-Au-Eue" secondAttribute="top" id="xoa-nh-Ro3"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="sceneView" destination="CXm-uq-ziI" id="T0s-C3-fSK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EYy-4y-aJk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="859.4202898550725" y="88.392857142857139"/>
         </scene>
     </scenes>
     <resources>
