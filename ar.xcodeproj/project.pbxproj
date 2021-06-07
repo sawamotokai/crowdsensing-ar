@@ -20,6 +20,7 @@
 		3B25C7E3266022E100BA1827 /* lego.scn in Resources */ = {isa = PBXBuildFile; fileRef = 3B25C7E2266022E100BA1827 /* lego.scn */; };
 		3B4F55D4266025A500069DA2 /* lego_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B4F55D3266025A500069DA2 /* lego_logo.png */; };
 		3B4F55D6266AD5D700069DA2 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4F55D5266AD5D700069DA2 /* ARViewController.swift */; };
+		3B4F55D9266AF74A00069DA2 /* tasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4F55D8266AF74A00069DA2 /* tasks.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		3B25C7E2266022E100BA1827 /* lego.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; name = lego.scn; path = art.scnassets/lego.scn; sourceTree = "<group>"; };
 		3B4F55D3266025A500069DA2 /* lego_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lego_logo.png; path = ../../../../../Downloads/lego_logo.png; sourceTree = "<group>"; };
 		3B4F55D5266AD5D700069DA2 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
+		3B4F55D8266AF74A00069DA2 /* tasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tasks.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 		3B25C7A926601C6000BA1827 /* ar */ = {
 			isa = PBXGroup;
 			children = (
+				3B4F55D7266AF72B00069DA2 /* API */,
 				3B4F55D3266025A500069DA2 /* lego_logo.png */,
 				3B25C7AA26601C6000BA1827 /* AppDelegate.swift */,
 				3B25C7AE26601C6000BA1827 /* ViewController.swift */,
@@ -141,6 +144,14 @@
 				3B25C7CE26601C6200BA1827 /* Info.plist */,
 			);
 			path = arUITests;
+			sourceTree = "<group>";
+		};
+		3B4F55D7266AF72B00069DA2 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				3B4F55D8266AF74A00069DA2 /* tasks.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -280,6 +291,7 @@
 				3B25C7AF26601C6000BA1827 /* ViewController.swift in Sources */,
 				3B25C7AB26601C6000BA1827 /* AppDelegate.swift in Sources */,
 				3B25C7AD26601C6000BA1827 /* SceneDelegate.swift in Sources */,
+				3B4F55D9266AF74A00069DA2 /* tasks.swift in Sources */,
 				3B4F55D6266AD5D700069DA2 /* ARViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
