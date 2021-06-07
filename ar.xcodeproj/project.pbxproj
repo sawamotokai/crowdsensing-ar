@@ -21,6 +21,9 @@
 		3B4F55D4266025A500069DA2 /* lego_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B4F55D3266025A500069DA2 /* lego_logo.png */; };
 		3B4F55D6266AD5D700069DA2 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4F55D5266AD5D700069DA2 /* ARViewController.swift */; };
 		3B4F55D9266AF74A00069DA2 /* tasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4F55D8266AF74A00069DA2 /* tasks.swift */; };
+		3B4F55DC266EC31100069DA2 /* NearTasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4F55DB266EC31100069DA2 /* NearTasksViewController.swift */; };
+		3B4F55DE266EC44700069DA2 /* utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4F55DD266EC44700069DA2 /* utils.swift */; };
+		3B4F55E0266EDC9700069DA2 /* TaskConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4F55DF266EDC9700069DA2 /* TaskConfirmationViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +64,9 @@
 		3B4F55D3266025A500069DA2 /* lego_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lego_logo.png; path = ../../../../../Downloads/lego_logo.png; sourceTree = "<group>"; };
 		3B4F55D5266AD5D700069DA2 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
 		3B4F55D8266AF74A00069DA2 /* tasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tasks.swift; sourceTree = "<group>"; };
+		3B4F55DB266EC31100069DA2 /* NearTasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearTasksViewController.swift; sourceTree = "<group>"; };
+		3B4F55DD266EC44700069DA2 /* utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = utils.swift; sourceTree = "<group>"; };
+		3B4F55DF266EDC9700069DA2 /* TaskConfirmationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskConfirmationViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,11 +117,10 @@
 		3B25C7A926601C6000BA1827 /* ar */ = {
 			isa = PBXGroup;
 			children = (
+				3B4F55DA266EC29000069DA2 /* viewControllers */,
 				3B4F55D7266AF72B00069DA2 /* API */,
 				3B4F55D3266025A500069DA2 /* lego_logo.png */,
 				3B25C7AA26601C6000BA1827 /* AppDelegate.swift */,
-				3B25C7AE26601C6000BA1827 /* ViewController.swift */,
-				3B4F55D5266AD5D700069DA2 /* ARViewController.swift */,
 				3B25C7B326601C6200BA1827 /* Assets.xcassets */,
 				3B25C7B026601C6000BA1827 /* Main.storyboard */,
 				3B25C7AC26601C6000BA1827 /* SceneDelegate.swift */,
@@ -124,6 +129,7 @@
 				3B25C7E2266022E100BA1827 /* lego.scn */,
 				3B25C7B826601C6200BA1827 /* Info.plist */,
 				3B25C7E0266021E300BA1827 /* art.scnassets */,
+				3B4F55DD266EC44700069DA2 /* utils.swift */,
 			);
 			path = ar;
 			sourceTree = "<group>";
@@ -152,6 +158,17 @@
 				3B4F55D8266AF74A00069DA2 /* tasks.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		3B4F55DA266EC29000069DA2 /* viewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				3B25C7AE26601C6000BA1827 /* ViewController.swift */,
+				3B4F55D5266AD5D700069DA2 /* ARViewController.swift */,
+				3B4F55DB266EC31100069DA2 /* NearTasksViewController.swift */,
+				3B4F55DF266EDC9700069DA2 /* TaskConfirmationViewController.swift */,
+			);
+			path = viewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -289,6 +306,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3B25C7AF26601C6000BA1827 /* ViewController.swift in Sources */,
+				3B4F55DC266EC31100069DA2 /* NearTasksViewController.swift in Sources */,
+				3B4F55E0266EDC9700069DA2 /* TaskConfirmationViewController.swift in Sources */,
+				3B4F55DE266EC44700069DA2 /* utils.swift in Sources */,
 				3B25C7AB26601C6000BA1827 /* AppDelegate.swift in Sources */,
 				3B25C7AD26601C6000BA1827 /* SceneDelegate.swift in Sources */,
 				3B4F55D9266AF74A00069DA2 /* tasks.swift in Sources */,

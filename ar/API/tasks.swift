@@ -13,29 +13,6 @@
 
 import Foundation
 
-func getTasks(from url: String) {
-    URLSession.shared.dataTask(with: URL(string: url)!, completionHandler: {data, response, error in
-        guard let data = data, error == nil else {
-            print("something went wrong")
-            return
-        }
-        var result: Welcome?
-        do {
-            result = try JSONDecoder().decode(Welcome.self, from: data)
-        } catch {
-            print("Failed to convert \(error.localizedDescription)")
-        }
-        guard let json = result else {
-            print("json not found")
-            return
-        }
-        print(json.data.tasks.index(after: 0))
-        print(json.data.tasks.index(after: 0))
-        print(json.data.tasks)
-        print("done inside")
-    }).resume()
-}
-
 // MARK: - Welcome
 struct Welcome: Codable {
     let data: DataClass

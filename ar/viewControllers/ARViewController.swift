@@ -9,11 +9,12 @@ import UIKit
 import ARKit
 
 class ARViewController: UIViewController, ARSCNViewDelegate {
-    
 
     @IBOutlet weak var sceneView: ARSCNView!
     
     let config = ARImageTrackingConfiguration()
+    var task: Task?
+    var isShowing = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,12 +41,12 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     
     
     @objc func handleTap(sender: UITapGestureRecognizer) {
-        print("Tapped the screen")
         let sceneViewTappedOn = sender.view as! SCNView
         let touchCoord = sender.location(in: sceneViewTappedOn)
         let hittest = sceneViewTappedOn.hitTest(touchCoord)
         if !hittest.isEmpty {
             print("touched something")
+            self.isShowing = false
         } else {
             print("didn't touch anything")
         }
@@ -53,7 +54,10 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
    
     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
        let node = SCNNode()
-       
+        print(isShowing)
+        if (!isShowing) {
+            return nil
+        }
        if let imageAnchor = anchor as? ARImageAnchor {
            let plane = SCNPlane(width: imageAnchor.referenceImage.physicalSize.width, height: imageAnchor.referenceImage.physicalSize.height)
            plane.firstMaterial?.diffuse.contents = UIColor(white: 1, alpha: 0.8)
