@@ -17,9 +17,7 @@ class TaskConfirmationViewController: UIViewController {
             guard let vc = self.storyboard?.instantiateViewController(identifier: "ar_vc") as? ARViewController else {
                 return
             }
-//            self.dismiss(animated: true, completion: nil)
             vc.task = self.task
-            
             self.navigationController!.pushViewController(vc, animated: true)
         }
     }

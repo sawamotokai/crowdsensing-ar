@@ -55,9 +55,7 @@ extension NearTasksViewController: UITableViewDelegate {
                 return
             }
             vc.task = self.tasks[indexPath.row]
-//            let navViewController = UINavigationController(rootViewController: vc)
             self.navigationController!.pushViewController(vc, animated: true)
-//            self.present(navViewController, animated: true)
         }
     }
 }

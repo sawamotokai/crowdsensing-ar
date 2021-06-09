@@ -9,6 +9,7 @@ import UIKit
 import ARKit
 import CoreLocation
 
+let BASE_API_URL = "https://ece-ar.herokuapp.com/api/v0"
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
     let button = UIButton()
@@ -39,8 +40,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     @IBAction func onTappingFind(_ sender: Any) {
-        let tempURL = "https://ece-ar.herokuapp.com/tasks/near?lat=\(self.lat!)&lng=\(self.lng!)"
-        getNearbyTasks(from: tempURL)
+        let url = "\(BASE_API_URL)/tasks/near?lat=\(self.lat!)&lng=\(self.lng!)"
+        getNearbyTasks(from: url)
     }
     
     

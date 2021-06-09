@@ -44,12 +44,11 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         let hittest = sceneViewTappedOn.hitTest(touchCoord)
         if !hittest.isEmpty {
             print("touched something")
+            sendResults()
             for obj in hittest {
                 // pick up if user is at the location of the reward, otherwise error message
                 obj.node.removeFromParentNode()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { // Change `2.0` to the desired number of seconds.
-//                    self.dismissUntilRoot()
-//                    self.navigationController?.popToRootViewController(animated: true)
                     self.dismissSelf()
                 }
             }
@@ -83,5 +82,37 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         while (vc.presentingViewController != nil) {
             vc.dismiss(animated: true, completion: nil)
         }
+    }
+    
+    private func sendResults() {
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd hh:mm:ss"
+        let currentTime: String = df.string(from: Date())
+        let taskID = task?.id
+        let rewardID = task?.rewardID
+        let trashbinID = task?.trashbinID
+        let params = [
+            "currentTime": currentTime,
+            "taskID": taskID,
+            "rewardID": rewardID,
+            "trashbinID": trashbinID
+        ]
+        let urlStr = "\(BASE_API_URL)/tasks/complete"
+        guard let url = URL(string: urlStr) else {
+            return
+        }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("Application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+        URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            if let error = error {
+                print("ERROR: \(error.localizedDescription)")
+                return
+            }
+            let json = try? JSONSerialization.jsonObject(with: data!, options: [])
+            print("Response: \(json!)")
+        }.resume()
     }
 }
