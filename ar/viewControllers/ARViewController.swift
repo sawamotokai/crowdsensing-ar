@@ -14,12 +14,10 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     
     let config = ARImageTrackingConfiguration()
     var task: Task?
-    var isShowing = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "AR"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(dismissSelf))
         // setup AR
         self.sceneView.debugOptions = [SCNDebugOptions.showWorldOrigin, SCNDebugOptions.showFeaturePoints]
         self.sceneView.delegate = self
@@ -46,7 +44,15 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         let hittest = sceneViewTappedOn.hitTest(touchCoord)
         if !hittest.isEmpty {
             print("touched something")
-            self.isShowing = false
+            for obj in hittest {
+                // pick up if user is at the location of the reward, otherwise error message
+                obj.node.removeFromParentNode()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { // Change `2.0` to the desired number of seconds.
+//                    self.dismissUntilRoot()
+//                    self.navigationController?.popToRootViewController(animated: true)
+                    self.dismissSelf()
+                }
+            }
         } else {
             print("didn't touch anything")
         }
@@ -54,10 +60,6 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
    
     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
        let node = SCNNode()
-        print(isShowing)
-        if (!isShowing) {
-            return nil
-        }
        if let imageAnchor = anchor as? ARImageAnchor {
            let plane = SCNPlane(width: imageAnchor.referenceImage.physicalSize.width, height: imageAnchor.referenceImage.physicalSize.height)
            plane.firstMaterial?.diffuse.contents = UIColor(white: 1, alpha: 0.8)
@@ -71,7 +73,15 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
            legoNode.position.z = 0.15
            planeNode.addChildNode(legoNode)
        }
-       
        return node
    }
+    
+    
+    
+    func dismissUntilRoot() {
+        guard let vc = self.presentingViewController else { return }
+        while (vc.presentingViewController != nil) {
+            vc.dismiss(animated: true, completion: nil)
+        }
+    }
 }

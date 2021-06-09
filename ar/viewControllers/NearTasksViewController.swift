@@ -9,6 +9,9 @@ import UIKit
 
 class NearTasksViewController: UIViewController {
     var tasks: [Task] = []
+    var lat: Double?
+    var lng: Double?
+    
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -18,6 +21,11 @@ class NearTasksViewController: UIViewController {
         print("VC rendered")
         print(tasks[0])
         print(tasks[1])
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Home", style: .plain, target: self, action: #selector(dismissSelf))
+
+        tasks.sort(by: {
+            return coord2distMeter(current: (la: self.lat!, lo: self.lng!), target: (la: $0.trashbin.location.lat, lo: $0.trashbin.location.lng)) < coord2distMeter(current: (la: self.lat!, lo: self.lng!), target: (la: $1.trashbin.location.lat, lo: $1.trashbin.location.lng))
+        })
         tableView.delegate = self
         tableView.dataSource = self
         // Do any additional setup after loading the view.
@@ -33,20 +41,23 @@ class NearTasksViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    @objc func dismissSelf() {
+        dismiss(animated: true, completion: nil)
+    }
 }
+
+
 
 extension NearTasksViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Selected row")
         DispatchQueue.main.async {
             guard let vc = self.storyboard?.instantiateViewController(identifier: "task_confirmation_vc") as? TaskConfirmationViewController else {
                 return
             }
             vc.task = self.tasks[indexPath.row]
-            let navViewController = UINavigationController(rootViewController: vc)
-//            navViewController.modalPresentationStyle = 
-            self.present(navViewController, animated: true)
+//            let navViewController = UINavigationController(rootViewController: vc)
+            self.navigationController!.pushViewController(vc, animated: true)
+//            self.present(navViewController, animated: true)
         }
     }
 }

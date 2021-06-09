@@ -7,30 +7,42 @@
 
 import UIKit
 import ARKit
+import CoreLocation
 
-class ViewController: UIViewController {
+
+class ViewController: UIViewController, CLLocationManagerDelegate {
     let button = UIButton()
-
+    var manager: CLLocationManager?
+    var lat: Double?
+    var lng: Double?
+    
     @IBOutlet weak var findButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // setup button
+        
         view.backgroundColor = .systemGray5
+        
+        // location setup
+        manager  = CLLocationManager()
+        manager?.delegate = self
+        manager?.desiredAccuracy = kCLLocationAccuracyBest
+        manager?.requestWhenInUseAuthorization()
+        manager?.startUpdatingLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let loc = locations.first else {
+            return
+        }
+        self.lat = loc.coordinate.latitude
+        self.lng = loc.coordinate.longitude
     }
     
     @IBAction func onTappingFind(_ sender: Any) {
-        let tempURL = "https://ece-ar.herokuapp.com/tasks/near?lat=21&lng=21"
+        let tempURL = "https://ece-ar.herokuapp.com/tasks/near?lat=\(self.lat!)&lng=\(self.lng!)"
         getNearbyTasks(from: tempURL)
     }
     
-    @objc func didTapButton() {
-        guard let vc = storyboard?.instantiateViewController(identifier: "ar_vc") as? ARViewController else {
-            return
-        }
-        let navViewController = UINavigationController(rootViewController: vc)
-        navViewController.modalPresentationStyle = .fullScreen
-        present(navViewController, animated: true)
-    }
     
     private func getNearbyTasks(from url: String) {
         URLSession.shared.dataTask(with: URL(string: url)!, completionHandler: {data, response, error in
@@ -56,8 +68,11 @@ class ViewController: UIViewController {
                     return
                 }
                 vc.tasks = json.data.tasks
-                let navViewController = UINavigationController(rootViewController: vc)
-                self.present(navViewController, animated: true)
+                vc.lng = self.lng
+                vc.lat = self.lat
+                let navController = UINavigationController(rootViewController: vc)
+                navController.modalPresentationStyle = .fullScreen
+                self.present(navController, animated: true)
             }
         }).resume()
     }

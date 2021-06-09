@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "C183892F-8AA4-4EAD-ABCF-36CC5C7080F0"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "296F4B27-13F3-416C-AE0F-4116EDD3BA5E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ar/viewControllers/TaskConfirmationViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "16"
+            endingLineNumber = "16"
+            landmarkName = "accept(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "296F4B27-13F3-416C-AE0F-4116EDD3BA5E - e25c04c0d6cb6aed"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ar.TaskConfirmationViewController.accept(Any) -&gt; ()"
+                  moduleName = "ar"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kaisawamoto/Desktop/work/RA-5G/ar/ar/viewControllers/TaskConfirmationViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "212">
+               </Location>
+               <Location
+                  uuid = "296F4B27-13F3-416C-AE0F-4116EDD3BA5E - a0927b9b86cc14c0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in ar.TaskConfirmationViewController.accept(Any) -&gt; ()"
+                  moduleName = "ar"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kaisawamoto/Desktop/work/RA-5G/ar/ar/viewControllers/TaskConfirmationViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "36">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

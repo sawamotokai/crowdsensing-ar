@@ -60,7 +60,7 @@ struct Trashbin: Codable {
 
 // MARK: - Location
 struct Location: Codable {
-    let lat, lng: Int
+    let lat, lng: Double
 }
 
 

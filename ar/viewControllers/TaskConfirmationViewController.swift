@@ -13,15 +13,14 @@ class TaskConfirmationViewController: UIViewController {
     var task: Task?
 
     @IBAction func accept(_ sender: Any) {
-        print("Accepting")
         DispatchQueue.main.async {
             guard let vc = self.storyboard?.instantiateViewController(identifier: "ar_vc") as? ARViewController else {
                 return
             }
+//            self.dismiss(animated: true, completion: nil)
             vc.task = self.task
-            let navViewController = UINavigationController(rootViewController: vc)
-            navViewController.modalPresentationStyle = .fullScreen
-            self.present(navViewController, animated: true)
+            
+            self.navigationController!.pushViewController(vc, animated: true)
         }
     }
     
