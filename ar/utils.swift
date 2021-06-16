@@ -62,3 +62,44 @@ func coord2distMeter(current: (la: Double, lo: Double), target: (la: Double, lo:
     let distance = sqrt((t1 * t1) + (t2 * t2))
     return distance / 1000
 }
+
+func isSuccess(statusCode: Int) -> Bool {
+    let codeStr: String = "\(statusCode)"
+    if codeStr[codeStr.index(codeStr.startIndex, offsetBy: 0)] == "2" {
+        return true
+    }
+    return false;
+}
+
+
+func postRequest(urlStr: String, params: [String: String?], callback: (() -> ())? = nil) {
+    guard let url = URL(string: urlStr) else {
+        return
+    }
+    var request = URLRequest(url: url)
+    request.httpMethod = "POST"
+    request.setValue("Application/json", forHTTPHeaderField: "Content-Type")
+    request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+    URLSession.shared.dataTask(with: request) {
+        data, response, error in
+        if let error = error {
+            print("ERROR: \(error.localizedDescription)")
+            return
+        }
+        let json = try? JSONSerialization.jsonObject(with: data!, options: [])
+        print("Response: \(json!)")
+        if let httpResponse = response as? HTTPURLResponse {
+            print(httpResponse.statusCode)
+            if isSuccess(statusCode: httpResponse.statusCode) {
+//            if httpResponse.statusCode == 200 {
+                callback?()
+            } else {
+                // TODO: toast error message
+                
+            }
+        }
+    }.resume()
+}
+
+
+

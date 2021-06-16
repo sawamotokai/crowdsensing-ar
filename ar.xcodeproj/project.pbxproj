@@ -24,6 +24,7 @@
 		3B4F55DC266EC31100069DA2 /* NearTasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4F55DB266EC31100069DA2 /* NearTasksViewController.swift */; };
 		3B4F55DE266EC44700069DA2 /* utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4F55DD266EC44700069DA2 /* utils.swift */; };
 		3B4F55E0266EDC9700069DA2 /* TaskConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4F55DF266EDC9700069DA2 /* TaskConfirmationViewController.swift */; };
+		3B4F55E22674322B00069DA2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4F55E12674322A00069DA2 /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		3B4F55DB266EC31100069DA2 /* NearTasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearTasksViewController.swift; sourceTree = "<group>"; };
 		3B4F55DD266EC44700069DA2 /* utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = utils.swift; sourceTree = "<group>"; };
 		3B4F55DF266EDC9700069DA2 /* TaskConfirmationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskConfirmationViewController.swift; sourceTree = "<group>"; };
+		3B4F55E12674322A00069DA2 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +169,7 @@
 				3B4F55D5266AD5D700069DA2 /* ARViewController.swift */,
 				3B4F55DB266EC31100069DA2 /* NearTasksViewController.swift */,
 				3B4F55DF266EDC9700069DA2 /* TaskConfirmationViewController.swift */,
+				3B4F55E12674322A00069DA2 /* LoginViewController.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -305,6 +308,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B4F55E22674322B00069DA2 /* LoginViewController.swift in Sources */,
 				3B25C7AF26601C6000BA1827 /* ViewController.swift in Sources */,
 				3B4F55DC266EC31100069DA2 /* NearTasksViewController.swift in Sources */,
 				3B4F55E0266EDC9700069DA2 /* TaskConfirmationViewController.swift in Sources */,

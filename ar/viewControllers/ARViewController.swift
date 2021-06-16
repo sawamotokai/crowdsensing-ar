@@ -44,7 +44,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         let hittest = sceneViewTappedOn.hitTest(touchCoord)
         if !hittest.isEmpty {
             print("touched something")
-            sendResults()
+            completeTask()
             for obj in hittest {
                 // pick up if user is at the location of the reward, otherwise error message
                 obj.node.removeFromParentNode()
@@ -84,35 +84,17 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         }
     }
     
-    private func sendResults() {
-        let df = DateFormatter()
-        df.dateFormat = "yyyy-MM-dd hh:mm:ss"
-        let currentTime: String = df.string(from: Date())
+    private func completeTask() {
         let taskID = task?.id
         let rewardID = task?.rewardID
         let trashbinID = task?.trashbinID
         let params = [
-            "currentTime": currentTime,
+            "userID": UserDefaults.standard.string(forKey:"USERNAME"),
             "taskID": taskID,
             "rewardID": rewardID,
             "trashbinID": trashbinID
         ]
         let urlStr = "\(BASE_API_URL)/tasks/complete"
-        guard let url = URL(string: urlStr) else {
-            return
-        }
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("Application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
-        URLSession.shared.dataTask(with: request) {
-            data, response, error in
-            if let error = error {
-                print("ERROR: \(error.localizedDescription)")
-                return
-            }
-            let json = try? JSONSerialization.jsonObject(with: data!, options: [])
-            print("Response: \(json!)")
-        }.resume()
+        postRequest(urlStr: urlStr, params: params)
     }
 }
