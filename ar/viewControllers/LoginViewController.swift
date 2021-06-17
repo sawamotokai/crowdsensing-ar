@@ -30,7 +30,7 @@ class LoginViewController: UIViewController {
         if UserDefaults.standard.bool(forKey: "IS_USER_SIGNED_IN") {
             goToHome(animated: false)
             print("logged in")
-            print(UserDefaults.standard.integer(forKey:"USERNAME"))
+            print(UserDefaults.standard.string(forKey:"USERNAME")!)
         } else {
             print("not logged in")
             
@@ -53,7 +53,7 @@ class LoginViewController: UIViewController {
         ]
         let urlStr = "\(BASE_API_URL)/users/new"
         print(username.text!)
-        postRequest(urlStr: urlStr, params: params) {
+        sendRequest(urlStr: urlStr, params: params) {
             UserDefaults.standard.set(true, forKey: "IS_USER_SIGNED_IN")
             UserDefaults.standard.set(self.username.text, forKey: "USERNAME")
             self.goToHome(animated: true)

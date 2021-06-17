@@ -72,12 +72,12 @@ func isSuccess(statusCode: Int) -> Bool {
 }
 
 
-func postRequest(urlStr: String, params: [String: String?], callback: (() -> ())? = nil) {
+func sendRequest(urlStr: String, params: [String: String?], method: String? = "POST", callback: (() -> ())? = nil) {
     guard let url = URL(string: urlStr) else {
         return
     }
     var request = URLRequest(url: url)
-    request.httpMethod = "POST"
+    request.httpMethod = method
     request.setValue("Application/json", forHTTPHeaderField: "Content-Type")
     request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
     URLSession.shared.dataTask(with: request) {

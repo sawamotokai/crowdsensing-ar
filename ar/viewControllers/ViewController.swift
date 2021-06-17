@@ -38,8 +38,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     @IBAction func onTappingFind(_ sender: Any) {
-        let url = "\(BASE_API_URL)/tasks/near?lat=\(self.lat!)&lng=\(self.lng!)"
-        getNearbyTasks(from: url)
+//        let url = "\(BASE_API_URL)/tasks/near?lat=\(self.lat!)&lng=\(self.lng!)"
+//        getNearbyTasks(from: url)
+        // TODO: just set the status to waiting. show toast message
+        let msg = "Your status has been set to waiting! Wait for a task to be assigned..."
+        let urlStr = "\(BASE_API_URL)/users/wait_for_task"
+        let params = [
+            "username" : UserDefaults.standard.string(forKey: "USERNAME")
+        ]
+        sendRequest(urlStr: urlStr, params: params, method: "PUT") {
+            DispatchQueue.main.async {
+                self.showToast(message: msg, color: .systemGreen)
+            }
+        }
     }
     
     
@@ -80,12 +91,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 
 extension UIViewController {
 
-func showToast(message : String, font: UIFont) {
+    func showToast(message : String, color: UIColor) {
 
-    let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-100, width: 150, height: 35))
-    toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 300, y: self.view.frame.size.height-100, width: self.view.frame.size.width-400, height: 35))
+    toastLabel.backgroundColor = color
     toastLabel.textColor = UIColor.white
-    toastLabel.font = font
     toastLabel.textAlignment = .center;
     toastLabel.text = message
     toastLabel.alpha = 1.0

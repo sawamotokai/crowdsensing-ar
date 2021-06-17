@@ -95,6 +95,6 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
             "trashbinID": trashbinID
         ]
         let urlStr = "\(BASE_API_URL)/tasks/complete"
-        postRequest(urlStr: urlStr, params: params)
+        sendRequest(urlStr: urlStr, params: params, method: "PUT")
     }
 }
