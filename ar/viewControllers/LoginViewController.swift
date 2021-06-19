@@ -51,7 +51,7 @@ class LoginViewController: UIViewController {
         let params = [
             "username": username.text
         ]
-        let urlStr = "\(BASE_API_URL)/users/new"
+        let urlStr = "\(BASE_API_URL)/users"
         print(username.text!)
         sendRequest(urlStr: urlStr, params: params) {
             UserDefaults.standard.set(true, forKey: "IS_USER_SIGNED_IN")

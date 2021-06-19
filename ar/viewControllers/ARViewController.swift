@@ -89,7 +89,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         let rewardID = task?.rewardID
         let trashbinID = task?.trashbinID
         let params = [
-            "userID": UserDefaults.standard.string(forKey:"USERNAME"),
+            "username": UserDefaults.standard.string(forKey:"USERNAME"),
             "taskID": taskID,
             "rewardID": rewardID,
             "trashbinID": trashbinID
