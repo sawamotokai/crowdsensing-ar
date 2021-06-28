@@ -14,10 +14,12 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     
     let config = ARImageTrackingConfiguration()
     var task: Task?
+    var assignment: Assignment?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "AR"
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         // setup AR
         self.sceneView.debugOptions = [SCNDebugOptions.showWorldOrigin, SCNDebugOptions.showFeaturePoints]
         self.sceneView.delegate = self
@@ -27,14 +29,29 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         }
         self.config.trackingImages = trackedImages
         self.config.maximumNumberOfTrackedImages = 1
-        print("Found  images")
         self.sceneView.session.run(config)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         self.sceneView.addGestureRecognizer(tapGesture)
     }
     
+    
+    
     @objc func dismissSelf() {
         dismiss(animated: true, completion: nil)
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Hide the navigation bar on the this view controller
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        // Show the navigation bar on other view controllers
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
     
@@ -49,7 +66,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
                 // pick up if user is at the location of the reward, otherwise error message
                 obj.node.removeFromParentNode()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { // Change `2.0` to the desired number of seconds.
-                    self.dismissSelf()
+                    popUntilHome(vc: self)
                 }
             }
         } else {
@@ -76,25 +93,14 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
    }
     
     
-    
-    func dismissUntilRoot() {
-        guard let vc = self.presentingViewController else { return }
-        while (vc.presentingViewController != nil) {
-            vc.dismiss(animated: true, completion: nil)
-        }
-    }
-    
+    // TODO: asssingmentID
     private func completeTask() {
-        let taskID = task?.id
-        let rewardID = task?.rewardID
-        let trashbinID = task?.trashbinID
         let params = [
-            "username": UserDefaults.standard.string(forKey:"USERNAME"),
-            "taskID": taskID,
-            "rewardID": rewardID,
-            "trashbinID": trashbinID
+            "assignmentID": (self.assignment?.id)!
         ]
         let urlStr = "\(BASE_API_URL)/tasks/complete"
+        print(params)
+        print(urlStr)
         sendRequest(urlStr: urlStr, params: params, method: "PUT")
     }
 }

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import UIKit
 // hubeny's distance formula
 /**
  * ２地点間の距離(m)を求める
@@ -87,19 +87,28 @@ func sendRequest(urlStr: String, params: [String: String?], method: String? = "P
             return
         }
         let json = try? JSONSerialization.jsonObject(with: data!, options: [])
-        print("Response: \(json!)")
+        if json != nil {
+            print("Response: \(json!)")
+        } else {
+            return
+        }
         if let httpResponse = response as? HTTPURLResponse {
             print(httpResponse.statusCode)
             if isSuccess(statusCode: httpResponse.statusCode) {
-//            if httpResponse.statusCode == 200 {
                 callback?()
             } else {
                 // TODO: toast error message
-                
             }
         }
     }.resume()
 }
 
 
-
+func popUntilHome(vc: UIViewController) {
+    for controller in vc.navigationController!.viewControllers as Array {
+        if controller.isKind(of: ViewController.self) {
+            vc.navigationController!.popToViewController(controller, animated: true)
+            break
+        }
+    }
+}

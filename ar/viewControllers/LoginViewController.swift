@@ -7,10 +7,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
-    
-    
-    
+class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var username: UITextField!
 
     @IBAction func didTapCreate(_ sender: Any) {
@@ -19,21 +16,16 @@ class LoginViewController: UIViewController {
         saveUser()
     }
     
-    private func callback() {
-        UserDefaults.standard.set(true, forKey: "IS_USER_SIGNED_IN")
-        UserDefaults.standard.set(username.text, forKey: "USERNAME")
-        goToHome(animated: true)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.username.delegate = self
+        
         if UserDefaults.standard.bool(forKey: "IS_USER_SIGNED_IN") {
             goToHome(animated: false)
             print("logged in")
             print(UserDefaults.standard.string(forKey:"USERNAME")!)
         } else {
             print("not logged in")
-            
         }
         // Do any additional setup after loading the view.
     }
@@ -53,10 +45,29 @@ class LoginViewController: UIViewController {
         ]
         let urlStr = "\(BASE_API_URL)/users"
         print(username.text!)
-        sendRequest(urlStr: urlStr, params: params) {
+        sendRequest(urlStr: urlStr, params: params, method: "POST") {
             UserDefaults.standard.set(true, forKey: "IS_USER_SIGNED_IN")
             UserDefaults.standard.set(self.username.text, forKey: "USERNAME")
             self.goToHome(animated: true)
         }
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
+    
 }
+//
+//extension UIViewController {
+//    func hideKeyboardWhenTappedAround() {
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+//        tap.cancelsTouchesInView = false
+//        view.addGestureRecognizer(tap)
+//    }
+//
+//    @objc func dismissKeyboard() {
+//        view.endEditing(true)
+//    }
+//}
