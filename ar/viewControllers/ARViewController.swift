@@ -7,20 +7,37 @@
 
 import UIKit
 import ARKit
+import CoreMotion
 
-class ARViewController: UIViewController, ARSCNViewDelegate {
+class ARViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDelegate {
 
+    let locationManager = CLLocationManager()
+    let motionManager = CMMotionManager()
     @IBOutlet weak var sceneView: ARSCNView!
     
     let config = ARImageTrackingConfiguration()
-    var task: Task?
+    var lat: Double?
+    var lng: Double?
     var assignment: Assignment?
+    var task: Task?
+    var displayed = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "AR"
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-        // setup AR
+        // location setup
+        if (CLLocationManager.headingAvailable()) {
+            locationManager.headingFilter = 1
+            locationManager.startUpdatingHeading()
+            locationManager.delegate = self
+            self.lat = locationManager.location?.coordinate.latitude
+            self.lng = locationManager.location?.coordinate.longitude
+        }
+        // motion setup
+        motionManager.startGyroUpdates()
+        motionManager.startDeviceMotionUpdates()
+        // AR setup
         self.sceneView.debugOptions = [SCNDebugOptions.showWorldOrigin, SCNDebugOptions.showFeaturePoints]
         self.sceneView.delegate = self
         guard let trackedImages = ARReferenceImage.referenceImages(inGroupNamed: "Photo", bundle: Bundle.main) else {
@@ -34,12 +51,62 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         self.sceneView.addGestureRecognizer(tapGesture)
     }
     
-    
-    
-    @objc func dismissSelf() {
-        dismiss(animated: true, completion: nil)
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let loc = locations.first else {
+            return
+        }
+        self.lat = loc.coordinate.latitude
+        self.lng = loc.coordinate.longitude
     }
     
+    func locationManager(_ manager: CLLocationManager, didUpdateHeading heading: CLHeading) {
+        let tolarance = 5.0
+        var heading = heading.magneticHeading
+        heading *= -1
+        heading += 90
+        if heading < 0 {
+            heading += 360
+        }
+        let dlat =  (self.assignment?.task.trashbin.location.lat)! - self.lat!
+        let dlng =  (self.assignment?.task.trashbin.location.lng)! - self.lng!
+        var radians = atan2(dlat, dlng)
+        if (radians < 0) {
+            radians += Double.pi*2.0;
+        }
+        let degrees = radians * 180 / Double.pi
+        let dif = abs(degrees - heading)
+        let margin = min(dif, 360 - dif)
+        guard var elevation = motionManager.deviceMotion?.attitude.pitch else {return}
+        elevation = elevation * 180 / Double.pi
+        print(degrees, heading)
+        let distSq = dlat * dlat + dlng * dlng
+        print("dist to the item", distSq)
+        if margin < tolarance && 70 <= elevation && elevation <= 90  && distSq <= 4e-6 {
+            displayReward()
+        }
+    }
+    
+    func displayReward() {
+        if displayed {
+            return
+        }
+        print("rendering lego")
+        let legoScene = SCNScene(named: "art.scnassets/lego.scn")!
+        let legoNode = legoScene.rootNode.childNodes.first!
+        guard let pov = sceneView.pointOfView else {
+            return
+        }
+        let transform = pov.transform
+        let orientation = SCNVector3(-transform.m31, -transform.m32, -transform.m33)
+        let location = SCNVector3(transform.m41, transform.m42, transform.m43)
+        var currentPositionOfCamera = SCNVector3()
+        currentPositionOfCamera.x = location.x + orientation.x
+        currentPositionOfCamera.y = location.y + orientation.y
+        currentPositionOfCamera.z = location.z + orientation.z
+        legoNode.position = currentPositionOfCamera
+        sceneView.scene.rootNode.addChildNode(legoNode)
+        displayed = true
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -73,7 +140,8 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
             print("didn't touch anything")
         }
     }
-   
+    
+    
     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
        let node = SCNNode()
        if let imageAnchor = anchor as? ARImageAnchor {
