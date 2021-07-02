@@ -112,3 +112,13 @@ func popUntilHome(vc: UIViewController) {
         }
     }
 }
+
+func showAlert(vc: UIViewController, title: String, message: String, actions: [UIAlertAction]) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    for action in actions {
+        alert.addAction(action)
+    }
+    vc.present(alert, animated: true, completion: nil)
+    
+}
+

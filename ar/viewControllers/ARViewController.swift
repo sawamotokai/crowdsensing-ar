@@ -45,6 +45,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDe
             return
         }
         self.config.trackingImages = trackedImages
+        sceneView.showsStatistics = false
         self.config.maximumNumberOfTrackedImages = 1
         self.sceneView.session.run(config)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
@@ -58,6 +59,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDe
         self.lat = loc.coordinate.latitude
         self.lng = loc.coordinate.longitude
     }
+   
     
     func locationManager(_ manager: CLLocationManager, didUpdateHeading heading: CLHeading) {
         let tolarance = 5.0
@@ -81,6 +83,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDe
         print(degrees, heading)
         let distSq = dlat * dlat + dlng * dlng
         print("dist to the item", distSq)
+//        if margin < tolarance && 70 <= elevation && elevation <= 90 {
         if margin < tolarance && 70 <= elevation && elevation <= 90  && distSq <= 4e-6 {
             displayReward()
         }
@@ -132,8 +135,10 @@ class ARViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDe
             for obj in hittest {
                 // pick up if user is at the location of the reward, otherwise error message
                 obj.node.removeFromParentNode()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { // Change `2.0` to the desired number of seconds.
-                    popUntilHome(vc: self)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { // Change `2.0` to the desired number of seconds.
+//                    popUntilHome(vc: self)
+                    let actions: [UIAlertAction] = [UIAlertAction(title: "OK", style: .cancel, handler: { _ in popUntilHome(vc: self) })]
+                    showAlert(vc: self, title: "Congrats!", message: "You got the reward.", actions: actions)
                 }
             }
         } else {

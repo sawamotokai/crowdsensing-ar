@@ -15,21 +15,22 @@ class RoutingMapViewController: UIViewController, MGLMapViewDelegate {
     var mapView: NavigationMapView!
     var routeOptions: NavigationRouteOptions?
     var route: Route?
-//    var task: Task?
+ 
     var assignment: Assignment?
     var routeController: RouteController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // map setup
         mapView = NavigationMapView(frame: view.bounds)
         view.addSubview(mapView)
         
         mapView.delegate = self
         mapView.showsUserLocation = true
         mapView.setUserTrackingMode(.follow, animated: true, completionHandler: nil)
-        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(_:)))
-        mapView.addGestureRecognizer(longPress)
         addToggleButton()
+        
         // Converts point where user did a long press to map coordinates
         let lat: Double? = assignment?.task.trashbin.location.lat
         let lng: Double? = assignment?.task.trashbin.location.lng
@@ -47,13 +48,11 @@ class RoutingMapViewController: UIViewController, MGLMapViewDelegate {
         }
     }
     
-    @objc func didLongPress(_ sender: UILongPressGestureRecognizer) {
-        guard sender.state == .began else { return }
-         
-        // Converts point where user did a long press to map coordinates
-        let point = sender.location(in: mapView)
-        let coordinate = mapView.convert(point, toCoordinateFrom: mapView)
-         
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        let coordinate = CLLocationCoordinate2D(latitude: (self.assignment?.task.trashbin.location.lat)!, longitude:( self.assignment?.task.trashbin.location.lng)!)
         if let origin = mapView.userLocation?.coordinate {
         // Calculate the route from the user's location to the set destination
             calculateRoute(from: origin, to: coordinate)
@@ -70,7 +69,7 @@ class RoutingMapViewController: UIViewController, MGLMapViewDelegate {
         let destination = Waypoint(coordinate: destination, coordinateAccuracy: -1, name: "Reward")
         // Specify that the route is intended for automobiles avoiding traffic
         let routeOptions = NavigationRouteOptions(waypoints: [origin, destination], profileIdentifier: .automobileAvoidingTraffic)
-
+        
         // Generate the route object and draw it on the map
         Directions.shared.calculate(routeOptions) { [weak self] (session, result) in
             switch result {
@@ -80,14 +79,13 @@ class RoutingMapViewController: UIViewController, MGLMapViewDelegate {
                     guard let route = response.routes?.first, let strongSelf = self else {
                         return
                     }
+
+
                 strongSelf.route = route
                 strongSelf.routeOptions = routeOptions
                 
                 // Draw the route on the map after creating it
                 strongSelf.drawRoute(route: route)
-                
-                // Show destination waypoint on the map
-//                strongSelf.mapView.showWaypoints(on: route)
                 
                 // Display callout view on destination annotation
                 if let annotation = strongSelf.mapView.annotations?.first as? MGLPointAnnotation {
@@ -127,24 +125,11 @@ class RoutingMapViewController: UIViewController, MGLMapViewDelegate {
      
     // Present the navigation view controller when the callout is selected
     func mapView(_ mapView: MGLMapView, tapOnCalloutFor annotation: MGLAnnotation) {
-        let lat: Double? = assignment?.task.trashbin.location.lat
-        let lng: Double? = assignment?.task.trashbin.location.lng
-        let coordinate = CLLocationCoordinate2D(latitude: lat!, longitude: lng!)
-        if let origin = mapView.userLocation?.coordinate {
-            // Calculate the route from the user's location to the set destination
-            calculateRoute(from: origin, to: coordinate)
-        } else {
-            print("Failed to get user location, make sure to allow location access for this application.")
-            return
-        }
-        
-//        calculateRoute(from: origin, to: goal)
         guard let route = route, let routeOptions = routeOptions else {
             return
         }
         DispatchQueue.main.async {
             let navigationViewController = NavigationViewController(for: route, routeIndex: 0, routeOptions: routeOptions)
-//            navigationViewController.navigationService.routeProgress.
             navigationViewController.modalPresentationStyle = .fullScreen
             self.present(navigationViewController, animated: true, completion: nil)
         }
@@ -210,13 +195,6 @@ extension RoutingMapViewController: NavigationViewControllerDelegate {
         let isFinalLeg = navigationViewController.navigationService.routeProgress.isFinalLeg
         if isFinalLeg {
             print("ARRIVED!!!!!!!!!!!!!!!!!!!")
-            DispatchQueue.main.async {
-                guard let vc = self.storyboard?.instantiateViewController(identifier: "ar_vc") as? ARViewController else {
-                    return
-                }
-                vc.assignment = self.assignment
-                self.navigationController!.pushViewController(vc, animated: true)
-            }
             return true
         }
         return false

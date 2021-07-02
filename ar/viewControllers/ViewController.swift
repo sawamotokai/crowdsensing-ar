@@ -10,49 +10,43 @@ import ARKit
 import CoreLocation
 
 let BASE_API_URL = "https://crowd-sensing.herokuapp.com/api/v0"
+let TIME_INTERVAL: Int = 15
 
-class ViewController: UIViewController, CLLocationManagerDelegate {
+class ViewController: UIViewController {
     var manager: CLLocationManager?
     var lat: Double?
     var lng: Double?
-    
+    var timer: Timer?
     @IBOutlet weak var findButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         findButton.layer.cornerRadius = findButton.layer.frame.height / 2
-        // location setup
-//        manager  = CLLocationManager()
-//        manager?.delegate = self
-//        manager?.desiredAccuracy = kCLLocationAccuracyBest
-//        manager?.requestWhenInUseAuthorization()
-//        manager?.startUpdatingLocation()
-
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let loc = locations.first else {
-            return
-        }
-        self.lat = loc.coordinate.latitude
-        self.lng = loc.coordinate.longitude
+    override func viewWillDisappear(_ animated: Bool) {
+        self.timer?.invalidate()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        createTimer()
+    }
+    
+    private func createTimer() {
+        self.timer = Timer.scheduledTimer(withTimeInterval: TimeInterval(TIME_INTERVAL), repeats: true, block: { [weak self] timer in
+            print("sending request")
+            self?.getCurrentAssignment()
+        })
+        self.timer?.tolerance = 100
+    }
     @IBAction func onTappingFind(_ sender: Any) {
-//        let url = "\(BASE_API_URL)/tasks/near?lat=\(self.lat!)&lng=\(self.lng!)"
-//        getNearbyTasks(from: url)
-        // TODO: just set the status to waiting. show toast message
-        let msg = "Your status has been set to waiting! Wait for a task to be assigned..."
         let urlStr = "\(BASE_API_URL)/users/wait_for_task"
         let params = [
             "username" : UserDefaults.standard.string(forKey: "USERNAME")
         ]
         sendRequest(urlStr: urlStr, params: params, method: "PUT") {
-            DispatchQueue.main.async {
-//                self.showToast(message: msg, color: .systemGreen)
-            }
+            self.getCurrentAssignment()
         }
-        getCurrentAssignment()
     }
     
     private func getCurrentAssignment() {
@@ -76,25 +70,20 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 if let httpResponse = response as? HTTPURLResponse {
                     print(httpResponse.statusCode)
                     if isSuccess(statusCode: httpResponse.statusCode) {
-                        guard let vc = self.storyboard?.instantiateViewController(identifier: "routingVC") as RoutingMapViewController? else {
-                            return
-                        }
-                        vc.assignment = res?.assignments[0]
-                        self.navigationController?.pushViewController(vc, animated: true)
+                        let actions: [UIAlertAction] = [
+                            UIAlertAction(title: "Accept", style: .default, handler: {_ in
+                                guard let vc = self.storyboard?.instantiateViewController(identifier: "routingVC") as RoutingMapViewController? else {
+                                    return
+                                }
+                                vc.assignment = res?.assignments[0]
+                                self.navigationController?.pushViewController(vc, animated: true)
+                            }),
+                            UIAlertAction(title: "Dismiss", style: .destructive, handler: nil)
+                        ]
+                        showAlert(vc: self, title: "A task is found", message: "Will you accept it?", actions: actions)
                     } else {
-                        // TODO: toast error message
-                        let alert = UIAlertController(title: "Alert", message: "No tasks were found", preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-                            switch action.style{
-                                case .default:
-                                print("default")
-                                case .cancel:
-                                print("cancel")
-                                case .destructive:
-                                print("destructive")
-                            }
-                        }))
-                        self.present(alert, animated: true, completion: nil)
+                        let actions: [UIAlertAction] = [UIAlertAction(title: "Dismiss", style: .destructive, handler: nil)]
+                        showAlert(vc: self, title: "Alert", message: "No tasks were found", actions: actions)
                     }
                 }
             }
