@@ -32,6 +32,12 @@ class ViewController: UIViewController {
         createTimer()
     }
     
+    @objc func appMovedToBackground() {
+        print("App moved to background!")
+    }
+    
+    @UIFocusEnvironment
+    
     private func createTimer() {
         self.timer = Timer.scheduledTimer(withTimeInterval: TimeInterval(TIME_INTERVAL), repeats: true, block: { [weak self] timer in
             print("sending request")
