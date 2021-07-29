@@ -45,9 +45,24 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         ]
         let urlStr = "\(BASE_API_URL)/users"
         print(username.text!)
+        // TODO: show busy indicator
+        let child = SpinnerViewController()
+
+        // add the spinner view controller
+        addChild(child)
+        child.view.frame = view.frame
+        view.addSubview(child.view)
+        child.didMove(toParent: self)
+        
         sendRequest(urlStr: urlStr, params: params, method: "POST") {
             UserDefaults.standard.set(true, forKey: "IS_USER_SIGNED_IN")
             UserDefaults.standard.set(self.username.text, forKey: "USERNAME")
+            DispatchQueue.main.async {
+                // then remove the spinner view controller
+                child.willMove(toParent: nil)
+                child.view.removeFromSuperview()
+                child.removeFromParent()
+            }
             self.goToHome(animated: true)
         }
     }

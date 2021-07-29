@@ -36,8 +36,6 @@ class ViewController: UIViewController {
         print("App moved to background!")
     }
     
-    @UIFocusEnvironment
-    
     private func createTimer() {
         self.timer = Timer.scheduledTimer(withTimeInterval: TimeInterval(TIME_INTERVAL), repeats: true, block: { [weak self] timer in
             print("sending request")
@@ -86,7 +84,7 @@ class ViewController: UIViewController {
                             }),
                             UIAlertAction(title: "Dismiss", style: .destructive, handler: nil)
                         ]
-                        showAlert(vc: self, title: "A task is found", message: "Will you accept it?", actions: actions)
+                        showAlert(vc: self, title: "A task was found", message: "Will you accept it?", actions: actions)
                     } else {
                         let actions: [UIAlertAction] = [UIAlertAction(title: "Dismiss", style: .destructive, handler: nil)]
                         showAlert(vc: self, title: "Alert", message: "No tasks were found", actions: actions)

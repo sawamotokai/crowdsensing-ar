@@ -28,6 +28,7 @@
 		3B4F55E22674322B00069DA2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4F55E12674322A00069DA2 /* LoginViewController.swift */; };
 		3B4F55E42684017700069DA2 /* RoutingMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4F55E32684017700069DA2 /* RoutingMapViewController.swift */; };
 		3B4F55E62685158800069DA2 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B4F55E52685158800069DA2 /* libz.tbd */; };
+		3B6A490326B36D9F00B08339 /* SpinnerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6A490226B36D9F00B08339 /* SpinnerViewController.swift */; };
 		68C8311E330EA9D17C8F1A61 /* Pods_arTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 446BB7C892A06CFFC37829CA /* Pods_arTests.framework */; };
 		BB3380BFE9432532A3037309 /* Pods_ar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA978C87F4C83E96EE75E7FA /* Pods_ar.framework */; };
 /* End PBXBuildFile section */
@@ -77,6 +78,7 @@
 		3B4F55E12674322A00069DA2 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		3B4F55E32684017700069DA2 /* RoutingMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingMapViewController.swift; sourceTree = "<group>"; };
 		3B4F55E52685158800069DA2 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		3B6A490226B36D9F00B08339 /* SpinnerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerViewController.swift; sourceTree = "<group>"; };
 		446BB7C892A06CFFC37829CA /* Pods_arTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_arTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DE2955980440AB8234C37F4 /* Pods-ar-arUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ar-arUITests.debug.xcconfig"; path = "Target Support Files/Pods-ar-arUITests/Pods-ar-arUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		504C6E753973DE846A465C1B /* Pods-arTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-arTests.debug.xcconfig"; path = "Target Support Files/Pods-arTests/Pods-arTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 				3B4F55DF266EDC9700069DA2 /* TaskConfirmationViewController.swift */,
 				3B4F55E12674322A00069DA2 /* LoginViewController.swift */,
 				3B4F55E32684017700069DA2 /* RoutingMapViewController.swift */,
+				3B6A490226B36D9F00B08339 /* SpinnerViewController.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -463,6 +466,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B6A490326B36D9F00B08339 /* SpinnerViewController.swift in Sources */,
 				3B4F55E22674322B00069DA2 /* LoginViewController.swift in Sources */,
 				3B25C7AF26601C6000BA1827 /* ViewController.swift in Sources */,
 				3B4F55DC266EC31100069DA2 /* NearTasksViewController.swift in Sources */,
